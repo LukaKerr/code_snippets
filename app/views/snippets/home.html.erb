@@ -1,0 +1,31 @@
+<div class="main">
+	<div class="tab">
+		<div class="home">
+			<% unless user_signed_in? %>
+				<p>Welcome. 
+				<br>Please sign up to view and vote on our extensive range of code snippets.</p>
+				<p>All snippets are easily available and have been tested across different major browsers.</p>
+				<p>If you have an awesome &amp;&amp; || ingenious snippet you'd like to share, please <%= link_to "log in", new_user_session_path, class: "login" %> and post one!</p>
+			<% else %>
+				<p>Thanks for signing in!</p>
+				<p>Navigate to a page via the top navigation bar, select a category and find a snippet.</p>
+				<p>If you have snippet you'd like to share, please <u><%= link_to "post one", new_snippet_path %></u>.</p>
+			<% end %>
+
+			<div class="featured">
+				<% @randomSnippet.each do |snippet| %>
+					<p>Random snippet:<br><%= link_to snippet.title, snippet %></p>
+				<% end %>
+				<% @upvotedSnippet.each do |snippet| %>
+					<p>Most upvoted snippet:<br><%= link_to snippet.title, snippet %></p>
+				<% end %>
+			</div>
+
+			<p id="total-votes">Total votes cast: <%= @totalVotes %></p>
+			<p id="total-votes">Total upvotes cast: <%= @totalUpVotes %></p>
+			<p id="total-votes">Total downvotes cast: <%= @totalDownVotes %></p>
+			
+		</div>
+		<p id="home-bottom"><span id="copyright">&copy;</span> Luka Kerr 2016. Built on Ruby &amp; PostgreSQL. | <%= link_to "About/Help", about_path %> | <%= link_to "Playground", playground_path %></p>
+	</div>
+</div>

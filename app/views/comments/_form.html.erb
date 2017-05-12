@@ -1,0 +1,14 @@
+<div class="centered">
+<div class="edit">
+	<div class="edit-comment">
+	<h2>Edit:</h2>
+ 		<%= simple_form_for [@comment.snippet, @comment]  do |f| %>
+	  		<%= f.error_notification %>
+	    	<%= f.input :body, :error_html => { :class => "form-error"} %>
+	    	<br>
+	    	<%= f.button :submit %>
+		<% end %>
+	</div>
+</div>
+</div>
+

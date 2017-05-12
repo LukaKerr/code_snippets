@@ -1,0 +1,33 @@
+<div class="comments">
+	<%= div_for(comment) do %>
+		<% if comment.user == current_user -%>
+
+			<%= link_to image_tag("/assets/delete.png"), [comment.snippet, comment], method: :delete, :title => "Delete comment", data: {confirm: 'Are you sure?'} %>
+			<%= link_to image_tag("/assets/edit.png"), edit_snippet_comment_path(@snippet, comment), :title => "Edit comment" %>
+
+		<% else %>
+
+			<%= link_to like_snippet_comment_path(@snippet, comment), method: :put do %>
+					<%= image_tag("/assets/up.png", class: "comment-votes", :title => "Upvote comment")  %>
+			<% end %>
+
+			<%= link_to dislike_snippet_comment_path(@snippet, comment), method: :put do %>
+					<%= image_tag("/assets/down.png", class: "comment-votes", :title => "Downvote comment") %>
+			<% end %>
+			
+			<% unless comment.weighted_score == 0 %>
+			<p class="comment-score"><%= comment.weighted_score %></p>
+			<% end %>
+
+		<% end %>
+
+		<% if comment.updated_at != comment.created_at %>
+    		<p id="comment-name"><%= comment.user.name %><span id="edited-comment"> (edited)</span></p>
+		<% else %>
+    		<p id="comment-name"><%= comment.user.name %></p>
+		<% end %>
+		
+		<p id="comment-date"><span id="hashtag">#</span><%= (comment.created_at).strftime("%B %d, %Y") %></p>
+		<pre id="comment-body"><%= markdown (auto_link(comment.body)) %></pre>
+	<% end %>
+</div>

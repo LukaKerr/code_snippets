@@ -1,0 +1,58 @@
+<div class="user-page">
+	<div class="top">
+		<%= link_to "Profile", user_path(current_user) %>
+		<%= link_to "Edit Profile & Settings", edit_user_registration_path, id: "selected" %>
+		<hr>
+	</div>
+
+	<div class="user-edit">
+	<%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+		<%= f.error_notification %>
+
+		<div class="form-inputs">
+			<%= f.input :name, required: true, :error_html => { :class => "form-error"} %>
+			<%= f.input :email, required: true, :error_html => { :class => "form-error"} %>
+
+			<% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+				<p>Currently waiting confirmation for: <%= resource.unconfirmed_email %></p>
+			<% end %>
+
+			<hr>
+
+			<div id="picture-input">
+				<%= f.input :picture, as: :file, label: "Profile picture (auto resized to 200x200)", :error_html => { :class => "form-error" } %>
+			</div>
+
+			<div id="about-tooltip">
+  				<p>To add code, wrap it in three backticks ``` with the language after.
+  				<br>Leave at least one line of space between text and code.
+  				<br><br>For example: <br><br><i>This is some text<br><br>```python<br>code goes here<br>```</i></p>
+  			</div>
+
+			<%= f.input :about, required: false, placeholder: "Enter a description about yourself", input_html: { class: "about-input" }, :error_html => { :class => "form-error"} %>
+			<%= f.input :website, required: false, placeholder: "example.com", :error_html => { :class => "form-error"} %>
+			<%= f.input :github, required: false, placeholder: "github.com/example", :error_html => { :class => "form-error"} %>
+			<%= f.input :language, required: false, label: "Favourite language", placeholder: "Enter a programming language you enjoy!", :error_html => { :class => "form-error"} %>
+
+			<hr>
+
+			<%= f.input :password, autocomplete: "off", label: "New password", required: false, input_html: { class: "password-input" }, :error_html => { :class => "form-error"} %>
+			<%= f.input :password_confirmation, label: "Re-enter new password", required: false, input_html: { class: "password-input" }, :error_html => { :class => "form-error"} %>
+
+			<div id="current-password-input">
+				<%= f.input :current_password, label: "Enter current password to save new password", required: false, :error_html => { :class => "form-error"} %>
+			</div>
+
+			<br>
+
+		</div>
+
+		<div class="form-actions">
+			<%= f.button :submit, "Update" %>
+		</div>
+		
+		<p id="delete-account"><%= link_to "Delete account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p>
+
+	<% end %>
+	</div>
+</div>

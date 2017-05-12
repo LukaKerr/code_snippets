@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Code Snippets</title>
+	<%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+	<%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+	<%= csrf_meta_tags %>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+
+	<nav>
+		<%= render 'layouts/links' %>
+		<div id="search">
+			<%= form_tag(snippets_path, :method => "get", id: "search-form") do %>
+			<%= text_field_tag :search, params[:search], placeholder: "search" %>
+			<% end %>
+		</div>
+	</nav>
+
+	<div class="nav2">
+		<span class="menubutton">
+			<span class="bar"></span>
+			<span class="bar"></span>
+			<span class="bar"></span>
+		</span>
+		
+		<div class="dropdown-nav">
+			<div class="dropdown-nav-links">
+				<%= render 'layouts/links' %>
+			</div>
+		</div>
+	</div>
+
+	<div class="centered">
+		<p class="notice fade"><%= notice %></p>
+		<p class="alert fade"><%= alert %></p>
+	</div>
+
+	<%= yield %>
+
+</body>
+</html>

@@ -1,0 +1,29 @@
+<%= link_to "Home", root_path, class: "one" %>
+<%= link_to "CSS", css_path, class: "two" %>
+<%= link_to "JavaScript", javascript_path, class: "three" %>
+<%= link_to "Ruby", ruby_path, class: "four" %>
+<%= link_to "Python", python_path, class: "five" %>
+<hr class="hr-one">
+
+<div class="right-links">
+	<% if user_signed_in? %>
+			<%= link_to "New Snippet", new_snippet_path %>
+			<%= link_to current_user.name, user_path(current_user) %>
+
+			<div class="more-dropdown">
+	  			<div class="more">
+	  				<a>More</a>
+	  			</div>
+	  			<div class="dropdown-content">
+	    			<%= link_to "About", about_path %>
+	    			<%= link_to "Playground", playground_path %>
+	    			<%= link_to "Leaderboard", users_leaderboard_path %>
+	    			<%= link_to "Log Out", destroy_user_session_path, method: :delete %>
+	  			</div>
+			</div>
+
+	<% else %>
+		<%= link_to "Sign Up", new_user_registration_path, class: "signup" %>
+		<%= link_to "Log In", new_user_session_path, class: "login" %>
+	<% end %>
+</div>

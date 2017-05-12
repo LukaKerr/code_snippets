@@ -1,0 +1,20 @@
+<div class="centered">
+	<div class="leaderboard">
+		<h3>Leadership Board:</h3>
+		<small>Top 20 users ordered by reputation</small>
+		<table>
+			<th>Rank</th>
+			<th>User</th>
+			<th>Reputation</th>
+			<% @users.limit(20).each_slice(1) do |one_user| %>
+			<tr>
+				<% one_user.each do |user| %>
+					<td id="rank"><%= @rank += 1 %></td>
+					<td><%= link_to user.name, "/users/#{user.id}" %></td>
+					<td id="rep"><%= user.rep %></td>
+				<% end %>
+			</tr>
+			<% end %>
+		</table>
+	</div>
+</div>

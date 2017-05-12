@@ -1,0 +1,135 @@
+<div class="centered">
+	<div class="show">
+
+		<% if @snippet.user.voted_up_on? @snippet %>
+
+			<%= link_to unvote_snippet_path(@snippet), method: :put, class: "upvote-link" do %>
+				<div class="tooltip">
+					<%= image_tag("/assets/selectedup.png", class: "vote-images", id: "selected-up") %>
+					<span class="tooltiptext tooltip-top">Click to unvote!</span>
+				</div>
+			<% end %>
+
+			<%= link_to dislike_snippet_path(@snippet), method: :put, class: "upvote-link" do %>
+				<div class="tooltip">
+					<%= image_tag("/assets/down.png", class: "vote-images", id: "down") %>
+					<span class="tooltiptext tooltip-top">This snippet isn't useful</span>
+				</div>
+			<% end %>
+
+		<% elsif @snippet.user.voted_down_on? @snippet %>
+
+			<%= link_to like_snippet_path(@snippet), method: :put, class: "upvote-link" do %>
+				<div class="tooltip">
+					<%= image_tag("/assets/up.png", class: "vote-images", id: "up") %>
+					<span class="tooltiptext tooltip-top">This snippet is useful!</span>
+				</div>
+			<% end %>
+
+			<%= link_to unvote_snippet_path(@snippet), method: :put, class: "upvote-link" do %>
+				<div class="tooltip">
+					<%= image_tag("/assets/selecteddown.png", class: "vote-images", id: "selected-down") %>
+					<span class="tooltiptext tooltip-top">Click to unvote!</span>
+				</div>
+			<% end %>
+
+		<% else %>
+
+			<%= link_to like_snippet_path(@snippet), method: :put, class: "upvote-link" do %>
+				<div class="tooltip">
+					<%= image_tag("/assets/up.png", class: "vote-images", id: "up") %>
+					<span class="tooltiptext tooltip-top">This snippet is useful!</span>
+				</div>
+			<% end %>
+
+			<%= link_to dislike_snippet_path(@snippet), method: :put, class: "upvote-link" do %>
+				<div class="tooltip">
+					<%= image_tag("/assets/down.png", class: "vote-images", id: "down") %>
+					<span class="tooltiptext tooltip-top">This snippet isn't useful</span>
+				</div>
+			<% end %>
+
+		<% end %>
+
+		<div class="snippet-vote-count">
+			<span title="Click to show individual vote count"><%= @snippet.weighted_score %></span>
+		</div>
+
+		<div class="individual-vote-count snippet-vote-count">
+		<% if @snippet.get_downvotes.size == 0 %>
+			<%= @snippet.get_downvotes.size %>
+		<% else %>
+			-<%= @snippet.get_downvotes.size %>
+		<% end %>
+			<%= @snippet.get_upvotes.size %>
+		</div>
+
+		<h2><%= @snippet.title %> </h2>
+
+		<% unless @snippet.css.blank? %>
+
+		CSS<br> <%= raw Pygments.highlight(@snippet.css, :lexer => 'css') %>
+
+		<% end %>
+
+		<% unless @snippet.html.blank? %>
+
+		HTML<br> <%= raw Pygments.highlight(@snippet.html, :lexer => 'html') %>
+
+		<% end %>
+
+		<% unless @snippet.javascript.blank? %>
+
+		JavaScript<br> <%= raw Pygments.highlight(@snippet.javascript, :lexer => 'javascript') %>
+
+		<% end %>
+
+		<% unless @snippet.ruby.blank? %>
+
+		Ruby<br> <%= raw Pygments.highlight(@snippet.ruby, :lexer => 'ruby') %>
+
+		<% end %>
+
+		<% unless @snippet.python.blank? %>
+
+		Python<br> <%= raw Pygments.highlight(@snippet.python, :lexer => 'python') %>
+
+		<% end %>
+
+		<br>
+
+		<h3 class="comments-title">
+			<% if @snippet.comments.count == 1 %>
+				<%= @snippet.comments.count %> Comment
+			<% else %>
+  				<%= @snippet.comments.count %> Comments
+  			<% end %>
+		</h3>
+
+  		<%= render :partial => @snippet.comments %>
+
+		<%= simple_form_for [@snippet, Comment.new]  do |f| %>
+  			<div class="comment-input">
+    			<%= f.text_area :body %>
+  			</div>
+  			<div id="comment-tooltip">
+  				<p>To post code, wrap it in three backticks ` with the language after.
+  				<br>Leave at least one line of space between text and code.
+  				<br><br>For example: <br><br><i>This is some text<br><br>```python<br>code goes here<br>```</i></p>
+  			</div>
+  			<br>
+  			<%= f.submit "Add Comment" %>
+		<% end %>
+
+		<br><br>
+
+		<% if @snippet.user == current_user or current_user.admin? %>
+			<%= link_to "Back", :back %>
+			<%= link_to "Edit", edit_snippet_path(@snippet) %>
+		<%= link_to "Delete", snippet_path(@snippet), method: :delete, data:{confirm: "Are you sure?"} %>
+		<% else %>
+			<%= link_to "Back", :back %>
+		<% end %>
+
+	</div>
+</div>

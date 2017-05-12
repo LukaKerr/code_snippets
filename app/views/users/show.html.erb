@@ -1,0 +1,83 @@
+<div class="user-page">
+	<div class="top">
+		<%= link_to "Profile", user_path(current_user), id: "selected" %>
+		<% if @user == current_user %> 
+			<%= link_to "Edit Profile & Settings", edit_user_registration_path %>
+		<% end %>
+		<hr>
+	</div>
+
+	<div class="left">
+	<br>
+		<div class="user-picture">
+		<% unless @user.picture.blank? %>
+			<%= image_tag @user.picture.url %>
+		<% else %>
+			<div id="missing-image"><%= image_tag random_image %></div>
+		<% end %>
+		</div>
+		<p id="reputation"><%= @user.rep %> <span id="reputation-word">REPUTATION</span></p>
+	</div>
+
+	<div class="middle">
+		<p id="user-name"><%= link_to @user.name, "/users/#{@user.id}" %></p>
+		<p>
+			<% unless @user.about.blank? %>
+				<div id="user-about"><%= markdown (auto_link(@user.about)) %></div>
+			<% else %>
+				<div id="user-about-blank">Apparently <%= @user.name %> prefers to keep an air of mystery about themself.</div>
+			<% end %>
+		</p>
+		<br>
+		<% unless @snippets.blank? %>
+			<h4>Posted Snippets:</h4>
+			<div class="table-sort">
+				<u><%= link_to "Newest", :sort => "created_at DESC" %></u>
+				<u><%= link_to "Oldest", :sort => "created_at ASC" %></u>
+				<u><%= link_to "A-Z", :sort => "title" %></u>
+				<u><%= link_to "Votes", :sort => "cached_votes_total DESC" %></u>
+			</div>
+
+			<table>
+				<% @snippets.each_slice(1) do |one_snippet| %>
+				<tr>
+					<% one_snippet.each do |snippet| %>
+					<td><span id="posted-score"><%= snippet.weighted_score %></span> &nbsp;<%= link_to snippet.title, snippet %></td>
+					<% end %>
+				</tr>
+				<% end %>
+			</table>
+
+		<% else %>
+		<div class="empty-snippets">
+			<%= image_tag "/assets/empty.png" %>
+			<p>This user hasn't posted any snippets... yet.</p>
+		</div>
+		<% end %>
+	</div>
+
+	<div class="right">
+		<table>
+			<tr>
+			    <th><%= @user.snippets.count %></th>
+			    <th><%= @user.rep %></th> 
+			    <th><%= @user.votes.count %></th>
+			</tr>
+			<tr>
+			    <td>Snippets</td>
+			    <td>Reputation</td>
+			    <td>Votes</td>
+			</tr>
+		</table>
+		<p><%= image_tag "/assets/reload.png" %><u>Member for:</u> <%= time_ago_in_words(@user.created_at) %></p>
+		<% unless @user.website.blank? %>
+			<p><%= image_tag "/assets/link.png" %><u>Website:</u> <%= link_to auto_link(link_url(@user.website)) %></p>
+		<% end %>
+		<% unless @user.github.blank? %>
+			<p><%= image_tag "/assets/github.png" %><u>Github:</u> <%= link_to auto_link(link_url(@user.github)) %></p>
+		<% end %>
+		<% unless @user.language.blank? %>
+			<p><%= image_tag "/assets/favourite.png" %><u>Favourite language:</u> <%= @user.language %></p>
+		<% end %>
+	</div>
+</div>

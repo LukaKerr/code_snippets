@@ -1,0 +1,20 @@
+<div class="main">
+	<div class="tab">
+		<table>
+			<% @snippets.each_slice(3) do |two_snippets| %>
+			<tr>
+				<% two_snippets.each do |snippet| %>
+					<td><%= link_to snippet.title, snippet %></td>
+				<% end %>
+			</tr>
+			<% end %>
+		</table>
+
+		<div class="no-snippets">
+			<% if @snippets.blank? %>
+				<p>No snippets found.</p>
+				<br>&nbsp;<u><%= link_to "Back", :back %></u>
+			<% end %>
+		</div>
+	</div>
+</div>

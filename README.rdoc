@@ -1,0 +1,5 @@
+== README
+
+Setup database with rake db:setup. This will seed the database with placeholder values including a test account.
+
+Go to db/seeds.rb for the user account details.

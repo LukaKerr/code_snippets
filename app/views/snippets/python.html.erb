@@ -1,0 +1,7 @@
+<div class="main">
+	<div class="tab">
+	<% Category.limit(5).offset(13).each do |snippet| %>
+    	<p><%= link_to snippet.name, snippets_path(category: snippet.name) %></p>
+    <% end %>
+	</div>
+</div>

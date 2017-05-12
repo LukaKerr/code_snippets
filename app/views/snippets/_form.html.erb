@@ -1,0 +1,24 @@
+<%= simple_form_for @snippet do |f| %>
+
+    <div class="dropdown">
+	   <%= f.collection_select :category_id, Category.all, :id, :name, {prompt: "Pick A Category"} %>
+    </div>
+
+    <div class="new-snippet">
+    	<br><br>
+        <%= f.input :title, label: "Title:", :input_html => {:id => "title-input"}, :error_html => { :class => "form-error"} %>
+        <br><br>
+        <%= f.input :css, label: "CSS:", input_html: { class: "code-input" }  %>
+        <br>
+        <%= f.input :html, label: "HTML:" %>
+        <br>
+        <%= f.input :javascript, label: "JavaScript:" %>
+        <br>
+        <%= f.input :ruby, label: "Ruby:" %>
+        <br>
+        <%= f.input :python, label: "Python:" %>
+        <br>
+        <%= f.button :submit %>
+    </div>
+
+<% end %>

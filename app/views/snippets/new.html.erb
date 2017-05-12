@@ -1,0 +1,16 @@
+<div class="centered">
+	<div class="new">
+		<h2>New Snippet</h2>
+		<div id="snippet-tooltip">
+  			<p>Before posting code, make sure it works as
+  			<br>expected. Test your code in the <%= link_to "playground", playground_path %>!</p>
+  		</div>
+  		<div id="code-tooltip">
+  			<p>You must include at least one languages code
+  			<br>in the snippet, otherwise you won't be able to post.</p>
+  		</div>
+		<%= render 'form' %>
+		<br>
+		<%= link_to "Back", root_path %>
+	</div>
+</div>
